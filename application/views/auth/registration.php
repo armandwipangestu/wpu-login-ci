@@ -9,24 +9,40 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user">
+                        <form class="user" method="POST" action="<?= base_url('auth/registration') ?>">
+
+                            <!-- Name -->
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Full Name">
+                                <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Full Name" value="<?= set_value('name') ?>">
+                                <?= form_error('name', '<small class="text-danger pl-3">', '</small>') ?>
                             </div>
+
+                            <!-- Email -->
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Email Address">
+                                <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" value="<?= set_value('email') ?>">
+                                <?= form_error('email', '<small class="text-danger pl-3">', '</small>') ?>
                             </div>
+
+                            <!-- Password -->
                             <div class="form-group row">
+
+                                <!-- Password 1 -->
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                                    <?= form_error('password', '<small class="text-danger pl-3">', '</small>') ?>
                                 </div>
+
+                                <!-- Confirm Password -->
                                 <div class="col-sm-6">
                                     <input type="password" class="form-control form-control-user" id="password_confirm" name="password_confirm" placeholder="Confirm Password">
                                 </div>
+
                             </div>
+
                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                 Register Account
                             </button>
+
                         </form>
                         <hr>
                         <div class="text-center">

@@ -12,35 +12,104 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Admin
-    </div>
+    <!-- Query Dari Menu -->
+    <?php
+    $role_id = $this->session->userdata('role_id');
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
+    // Note:
+    // 
+    // Jika Admin: {
+    //      user_menu {
+    //          id = 1
+    //          menu = Admin
+    //      }
+    //      user_access_menu {
+    //          [
+    //              id = 1
+    //              role_id = 1
+    //              menu_id = 1
+    //          ],
+    //          [
+    //              id = 2
+    //              role_id = 1
+    //              menu_id = 2
+    //          ],
+    //      }
+    //      output {
+    //          [
+    //              'id' => 1
+    //              'menu' => 'Admin'
+    //          ],
+    //          [
+    //              'id' => 2
+    //              'menu' => 'User'
+    //          ]
+    //      }
+    // }
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+    // Jika Member: {
+    //      user_menu {
+    //          id = 2
+    //          menu = User
+    //      }
+    //      user_access_menu {
+    //          id = 3
+    //          role_id = 2
+    //          menu_id = 2
+    //      }
+    //      output {
+    //          [
+    //              'id' => 2
+    //              'menu' => 'User'
+    //          ]
+    //      }
+    // }
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        User
-    </div>
+    $queryMenu = "SELECT `user_menu`.`id`, `menu`
+  FROM `user_menu`
+  JOIN `user_access_menu` ON `user_menu`.`id` = `user_access_menu`.`menu_id`
+  WHERE `user_access_menu`.`role_id` = $role_id
+  ORDER BY `user_access_menu`.`menu_id` ASC
+  ";
 
-    <!-- Nav Item - My Profile -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-user"></i>
-            <span>My Profile</span></a>
-    </li>
+    $menu = $this->db->query($queryMenu)->result_array();
+    ?>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+    <!-- Looping Menu -->
+    <?php foreach ($menu as $m) : ?>
+        <div class="sidebar-heading">
+            <?= $m['menu']; ?>
+        </div>
+
+        <!-- Siapkan Sub-Menu Sesuai Menu -->
+        <?php
+        $menuId = $m['id'];
+        $querySubMenu = "SELECT *
+  FROM `user_sub_menu`
+  JOIN `user_menu` ON `user_sub_menu`.`menu_id` = `user_menu`.`id`
+  WHERE `user_sub_menu`.`menu_id` = $menuId
+  AND `user_sub_menu`.`is_active` = 1";
+
+        // Another Query
+        // $querySubMenu = "SELECT * 
+        //  FROM `user_sub_menu` WHERE `menu_id` = $menuId
+        // AND `is_active` = 1 
+        // ";
+
+        $subMenu = $this->db->query($querySubMenu)->result_array();
+        ?>
+
+        <?php foreach ($subMenu as $sm) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url($sm['url']) ?>">
+                    <i class="<?= $sm['icon'] ?>"></i>
+                    <span><?= $sm['title'] ?></span></a>
+            </li>
+        <?php endforeach; ?>
+
+        <hr class="sidebar-divider">
+
+    <?php endforeach; ?>
 
     <!-- Heading -->
     <div class="sidebar-heading">

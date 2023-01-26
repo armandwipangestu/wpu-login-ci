@@ -24,25 +24,4 @@ class Menu extends CI_Controller
             redirect('menu');
         }
     }
-
-    public function edit()
-    {
-        $data['title'] = "Edit Menu";
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['id'] = $this->uri->segment(3);
-        $data['menu'] = $this->db->get_where('user_menu', ['id' => $data['id']])->row_array();
-
-        $this->form_validation->set_rules('menu', 'Menu', 'required');
-
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/edit', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $this->db->where('id', $this->uri->segment(3));
-            $this->db->update('user_menu', 'menu', $this->input->post('menu'));
-        }
-    }
 }

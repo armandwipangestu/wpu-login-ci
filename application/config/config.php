@@ -23,7 +23,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/wpu-login/';
+// var_dump($_SERVER);
+// $http_host = $_SERVER['HTTP_HOST'];
+// var_dump($_SERVER['HTTP_HOST']);
+// $http_host = "http://localhost:8080";
+$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/wpu-login/";
 
 /*
 |--------------------------------------------------------------------------

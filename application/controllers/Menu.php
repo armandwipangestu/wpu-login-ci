@@ -19,8 +19,9 @@ class Menu extends CI_Controller
             $this->load->view('menu/index', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->db->insert('user_menu', ['menu' => $this->input->post('menu')]);
-            $this->session->set_flashdata('message', '<div class="alert alert-success">New Menu added!</div>');
+            $menu = $this->input->post('menu');
+            $this->db->insert('user_menu', ['menu' => $menu]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $menu . '" has been added!</div>');
             redirect('menu');
         }
     }
@@ -39,5 +40,45 @@ class Menu extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('menu/submenu', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function edit()
+    {
+        $data['title'] = 'Ubah Menu Management';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $menu_id = $this->uri->segment(3);
+        $query = $this->db->get_where('user_menu', ['id' => $menu_id])->row_array();
+        $data['result'] = $query;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('menu/editmenu', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function update()
+    {
+        $this->form_validation->set_rules('menu', "Menu", 'required');
+        if ($this->form_validation->run() == false) {
+        } else {
+            $id = htmlspecialchars($this->input->post('id', true));
+            $old_menu = $this->input->post('old_menu', true);
+            $menu = htmlspecialchars($this->input->post('menu', true));
+            $this->db->where('id', $id);
+            $this->db->update('user_menu', ['menu' => $menu]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $old_menu . '" updated to "' . $menu . '"</div>');
+            redirect('menu');
+        }
+    }
+
+    public function delete()
+    {
+        $menu_id = $this->uri->segment(3);
+        $menu_name = $this->db->get_where('user_menu', ['id' => $menu_id])->row_array()['menu'];
+        $this->db->where('id', $menu_id);
+        $this->db->delete('user_menu');
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $menu_name . '" has been deleted!</div>');
+        redirect("menu");
     }
 }

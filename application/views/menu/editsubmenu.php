@@ -1,0 +1,44 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
+
+
+    <div class="row">
+        <div class="col-lg">
+            <form action="<?= base_url('menu/update') ?>" method="POST" class="form-floating">
+                <div class="row">
+                    <div class="col-md-3 mt-3">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control" name="title" value="<?= $result['title'] ?>" />
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Menu</label>
+                        <select name="menu_id" id="menu_id" class="form-control">
+                            <?php foreach ($menu as $m) : ?>
+                                <option value="<?= $m['id'] ?>"><?= $m['menu'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Url</label>
+                        <input type="text" class="form-control" name="url" value="<?= $result['url'] ?>" />
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Icon</label>
+                        <input type="text" class="form-control" name="icon" value="<?= $result['icon'] ?>" />
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Is Active</label>
+                        <input type="text" class="form-control" name="is_active" value="<?= $result['is_active'] ?>" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Update</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</div>

@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // $http_host = $_SERVER['HTTP_HOST'];
 // var_dump($_SERVER['HTTP_HOST']);
 // $http_host = "http://localhost:8080";
-$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/wpu-login/";
+$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/wpu-login-ci/";
 
 /*
 |--------------------------------------------------------------------------

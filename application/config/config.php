@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // $http_host = $_SERVER['HTTP_HOST'];
 // var_dump($_SERVER['HTTP_HOST']);
 // $http_host = "http://localhost:8080";
-$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/wpu-login/";
+$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/wpu-login-ci/";
 
 /*
 |--------------------------------------------------------------------------
@@ -391,7 +391,7 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

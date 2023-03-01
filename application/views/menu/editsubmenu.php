@@ -4,6 +4,9 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
 
+    <!-- <?php
+        var_dump($result);
+    ?> -->
 
     <div class="row">
         <div class="col-lg">
@@ -16,6 +19,7 @@
                     <div class="col-md-3 mt-3">
                         <label for="">Menu</label>
                         <select name="menu_id" id="menu_id" class="form-control">
+                            <option value="">Select Menu</option>
                             <?php foreach ($menu as $m) : ?>
                                 <option value="<?= $m['id'] ?>"><?= $m['menu'] ?></option>
                             <?php endforeach; ?>

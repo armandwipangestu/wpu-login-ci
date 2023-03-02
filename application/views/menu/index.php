@@ -29,7 +29,7 @@
                             <td><?= $m['menu'] ?></td>
                             <td>
                                 <a href="<?= base_url('menu/edit/') . $m['id'] ?>" class="badge badge-success">Edit</a>
-                                <a href="<?= base_url('menu/delete/') . $m['id'] ?>" class="badge badge-danger">Delete</a>
+                                <a class="badge badge-danger delete" data-id="<?= $m['id'] ?>" data-url="<?= base_url('menu/delete') ?>">Delete</a>
                             </td>
                         </tr>
                         <?php $i++ ?>

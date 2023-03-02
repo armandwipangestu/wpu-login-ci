@@ -48,6 +48,31 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
 
+<script src="<?= base_url('assets/') ?>vendor/sweetalert2/js/sweetalert2.all.min.js"></script>
+
+<script>
+    const deleteComponent = document.querySelectorAll('.delete')
+    deleteComponent.forEach((dc) => {
+        dc.addEventListener("click", () => {
+            const dataid = dc.dataset.id;
+            const base_url = dc.dataset.url;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Apakah anda yakin ingin menghapus ini?',
+                showCancelButton: true,
+                confirmButtonColor: '#d9534f',
+                cancelButtonColor: '#5cb85c',
+                confirmButtonText: `Ya`,
+                cancelButtonText: `Tidak`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = `${base_url}/${dataid}`
+                }
+            })
+        })
+    })
+</script>
+
 </body>
 
 </html>

@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-lg">
-            <form action="<?= base_url('menu/update') ?>" method="POST" class="form-floating">
+            <form action="<?= base_url('menu/subupdate') ?>" method="POST" class="form-floating">
                 <div class="row">
                     <div class="col-md-3 mt-3">
                         <label for="">Title</label>

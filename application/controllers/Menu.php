@@ -36,11 +36,32 @@ class Menu extends CI_Controller
         $data['subMenu'] = $this->menu->getSubMenu();
         $data['menu'] = $this->db->get('user_menu')->result_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/submenu', $data);
-        $this->load->view('templates/footer');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('menu_id', 'Menu', 'required');
+        $this->form_validation->set_rules('url', 'Url', 'required');
+        $this->form_validation->set_rules('icon', 'Icon', 'required');
+        $this->form_validation->set_rules('is_active', 'Active', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/submenu', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $sub_menu = $this->input->post('title');
+            $data = [
+                'menu_id' => htmlspecialchars($this->input->post('menu_id', true)),
+                'title' => htmlspecialchars($this->input->post('title', true)),
+                'url' => htmlspecialchars($this->input->post('url', true)),
+                'icon' => htmlspecialchars($this->input->post('icon', true)),
+                'is_active' => htmlspecialchars($this->input->post('is_active', true))
+            ];
+
+            $this->db->insert('user_sub_menu', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $sub_menu . '" has been added!</div>');
+            redirect('menu/submenu');
+        }
     }
 
     public function edit()
@@ -97,5 +118,14 @@ class Menu extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('menu/editsubmenu', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function subdelete() {
+        $sub_menu_id = $this->uri->segment(3);
+        $sub_menu_name = $this->db->get_where('user_sub_menu', ['id' => $sub_menu_id])->row_array()['title'];
+        $this->db->where('id', $sub_menu_id);
+        $this->db->delete('user_sub_menu');
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $sub_menu_name . '" has been deleted!</div>');
+        redirect('menu/submenu');
     }
 }

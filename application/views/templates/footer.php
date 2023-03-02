@@ -29,10 +29,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Select "<b>Logout</b>" below if you are ready to end your current session.</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="<?= base_url('auth/logout') ?>">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Cancel</button>
+                <a class="btn btn-primary" href="<?= base_url('auth/logout') ?>"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a>
             </div>
         </div>
     </div>
@@ -55,14 +55,15 @@
     deleteComponent.forEach((dc) => {
         dc.addEventListener("click", () => {
             const dataid = dc.dataset.id;
+            const data_name = dc.dataset.name;
             const base_url = dc.dataset.url;
             Swal.fire({
                 icon: 'warning',
-                title: 'Apakah anda yakin ingin menghapus ini?',
+                html: `Apakah anda yakin ingin menghapus <b>${data_name}</b>?`,
                 showCancelButton: true,
                 confirmButtonColor: '#d9534f',
                 cancelButtonColor: '#5cb85c',
-                confirmButtonText: `Ya`,
+                confirmButtonText: `<i class="fas fa-trash"></i> Ya`,
                 cancelButtonText: `Tidak`,
             }).then((result) => {
                 if (result.isConfirmed) {

@@ -21,7 +21,7 @@ class Menu extends CI_Controller
         } else {
             $menu = $this->input->post('menu');
             $this->db->insert('user_menu', ['menu' => $menu]);
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $menu . '" has been added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "<b>' . $menu . '</b>" has been added!</div>');
             redirect('menu');
         }
     }
@@ -59,7 +59,7 @@ class Menu extends CI_Controller
             ];
 
             $this->db->insert('user_sub_menu', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $sub_menu . '" has been added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "<b>' . $sub_menu . '</b>" has been added on menu "<b>' . $this->menu->getMenuId($data['menu_id'])[0]['menu'] . '</b>"!</div>');
             redirect('menu/submenu');
         }
     }
@@ -89,7 +89,7 @@ class Menu extends CI_Controller
             $menu = htmlspecialchars($this->input->post('menu', true));
             $this->db->where('id', $id);
             $this->db->update('user_menu', ['menu' => $menu]);
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $old_menu . '" updated to "' . $menu . '"</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "<b>' . $old_menu . '</b>" updated to "<b>' . $menu . '</b>"</div>');
             redirect('menu');
         }
     }
@@ -100,7 +100,7 @@ class Menu extends CI_Controller
         $menu_name = $this->db->get_where('user_menu', ['id' => $menu_id])->row_array()['menu'];
         $this->db->where('id', $menu_id);
         $this->db->delete('user_menu');
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "' . $menu_name . '" has been deleted!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Menu "<b>' . $menu_name . '</b>" has been deleted!</div>');
         redirect("menu");
     }
 
@@ -115,7 +115,7 @@ class Menu extends CI_Controller
         $data['menu'] = $this->db->get('user_menu')->result_array();
         $data['subMenuById'] = [
             $this->menu->getSubMenuById($sub_menu_id),
-            $this->menu->getMenuId($sub_menu_id)
+            $this->menu->getSubMenuId($sub_menu_id)
         ];
 
         $this->load->view('templates/header', $data);
@@ -146,7 +146,7 @@ class Menu extends CI_Controller
 
             $this->db->where('id', $id);
             $this->db->update('user_sub_menu', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $data['title'] . '" has been updated!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "<b>' . $data['title'] . '</b>" has been updated!</div>');
             redirect("menu/submenu");
         }
     }
@@ -156,7 +156,7 @@ class Menu extends CI_Controller
         $sub_menu_name = $this->db->get_where('user_sub_menu', ['id' => $sub_menu_id])->row_array()['title'];
         $this->db->where('id', $sub_menu_id);
         $this->db->delete('user_sub_menu');
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $sub_menu_name . '" has been deleted!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "<b>' . $sub_menu_name . '</b>" has been deleted!</div>');
         redirect('menu/submenu');
     }
 }

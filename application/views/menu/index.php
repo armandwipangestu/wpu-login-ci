@@ -11,7 +11,7 @@
 
             <?= $this->session->flashdata('message') ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal">Add New Menu</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal"><i class="fas fa-plus mr-1"></i> Add New Menu</a>
 
             <table class="table table-hover">
                 <thead>
@@ -28,8 +28,8 @@
                             <th scope="row"><?= $i ?></th>
                             <td><?= $m['menu'] ?></td>
                             <td>
-                                <a href="<?= base_url('menu/edit/') . $m['id'] ?>" class="badge badge-success">Edit</a>
-                                <a class="badge badge-danger delete" data-id="<?= $m['id'] ?>" data-url="<?= base_url('menu/delete') ?>">Delete</a>
+                                <a href="<?= base_url('menu/edit/') . $m['id'] ?>" class="badge badge-success"><i class="fas fa-edit"></i> Edit</a>
+                                <a class="badge badge-danger delete" data-id="<?= $m['id'] ?>" data-url="<?= base_url('menu/delete') ?>" data-name="<?= $m['menu'] ?>"><i class="fas fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                         <?php $i++ ?>
@@ -63,8 +63,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus mr-1"></i> Add</button>
                 </div>
             </form>
         </div>

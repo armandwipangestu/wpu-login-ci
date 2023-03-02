@@ -41,7 +41,7 @@
                     </div>
                     <input type="hidden" name="id" value="<?= $result['id'] ?>">
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Update</button>
+                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-edit mr-1"></i> Update</button>
             </form>
         </div>
     </div>

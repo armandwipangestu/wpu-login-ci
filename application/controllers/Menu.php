@@ -107,17 +107,48 @@ class Menu extends CI_Controller
     public function subedit()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Menu_model', 'menu');
         $sub_menu_id = $this->uri->segment(3);
         $query = $this->db->get_where('user_sub_menu', ['id' => $sub_menu_id])->row_array();
         $data['result'] = $query;
         $data['title'] = 'Edit Submenu Management - ' . $data['result']["title"];
         $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['subMenuById'] = [
+            $this->menu->getSubMenuById($sub_menu_id),
+            $this->menu->getMenuId($sub_menu_id)
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('menu/editsubmenu', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function subupdate() {
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('menu_id', 'Menu', 'required');
+        $this->form_validation->set_rules('url', 'Url', 'required');
+        $this->form_validation->set_rules('icon', 'Icon', 'required');
+        $this->form_validation->set_rules('is_active', 'Active', 'required');
+
+        if ($this->form_validation->run() == false) {
+        } else {
+            $id = htmlspecialchars($this->input->post('id', true));
+            
+            $data = [
+                'title' => htmlspecialchars($this->input->post('title')),
+                'menu_id' => htmlspecialchars($this->input->post('menu_id')),
+                'url' => htmlspecialchars($this->input->post('url')),
+                'icon' => htmlspecialchars($this->input->post('icon')),
+                'is_active' => htmlspecialchars($this->input->post('is_active')),
+            ];
+
+            $this->db->where('id', $id);
+            $this->db->update('user_sub_menu', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Submenu "' . $data['title'] . '" has been updated!</div>');
+            redirect("menu/submenu");
+        }
     }
 
     public function subdelete() {

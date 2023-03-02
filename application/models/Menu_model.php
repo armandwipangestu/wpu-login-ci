@@ -11,4 +11,18 @@ class Menu_model extends CI_Model
         ';
         return $this->db->query($query)->result_array();
     }
+
+    public function getSubMenuById($sub_menu_id) 
+    {
+        $query = 'SELECT menu FROM `user_menu` WHERE id = (
+                SELECT menu_id FROM `user_sub_menu` WHERE id = ' . $sub_menu_id . '
+            )';
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getMenuId($sub_menu_id)
+    {
+        $query = 'SELECT menu_id FROM `user_sub_menu` WHERE id = ' . $sub_menu_id . '';
+        return $this->db->query($query)->result_array();
+    }
 }

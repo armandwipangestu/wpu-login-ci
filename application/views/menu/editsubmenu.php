@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-lg">
-            <form action="<?= base_url('menu/update') ?>" method="POST" class="form-floating">
+            <form action="<?= base_url('menu/subupdate') ?>" method="POST" class="form-floating">
                 <div class="row">
                     <div class="col-md-3 mt-3">
                         <label for="">Title</label>
@@ -19,9 +19,11 @@
                     <div class="col-md-3 mt-3">
                         <label for="">Menu</label>
                         <select name="menu_id" id="menu_id" class="form-control">
-                            <option value="">Select Menu</option>
+                            <option value="<?= $subMenuById[1][0]['menu_id'] ?>"><?= $subMenuById[0][0]['menu'] ?></option>
                             <?php foreach ($menu as $m) : ?>
-                                <option value="<?= $m['id'] ?>"><?= $m['menu'] ?></option>
+                                <?php if($m['menu'] != $subMenuById[0][0]['menu']) : ?>
+                                    <option value="<?= $m['id'] ?>"><?= $m['menu'] ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -37,6 +39,7 @@
                         <label for="">Is Active</label>
                         <input type="text" class="form-control" name="is_active" value="<?= $result['is_active'] ?>" />
                     </div>
+                    <input type="hidden" name="id" value="<?= $result['id'] ?>">
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Update</button>
             </form>
